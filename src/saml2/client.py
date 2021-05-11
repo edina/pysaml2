@@ -616,7 +616,7 @@ class Saml2Client(Base):
         _req = self._parse_request(request, LogoutRequest,
                                    "single_logout_service", binding)
 
-        if _req.message.name_id == name_id:
+        if _req.message.name_id.text == name_id.text:
             try:
                 if self.local_logout(name_id):
                     status = success_status_factory()
