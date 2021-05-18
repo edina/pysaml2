@@ -623,7 +623,7 @@ class Saml2Client(Base):
         _req = self._parse_request(request, LogoutRequest,
                                    "single_logout_service", binding)
 
-        if _req.message.name_id == name_id:
+        if _req.message.name_id.text == name_id.text:
             try:
                 if self.local_logout(name_id):
                     status = success_status_factory()
@@ -640,7 +640,7 @@ class Saml2Client(Base):
         if binding == BINDING_SOAP:
             response_bindings = [BINDING_SOAP]
         elif binding in [BINDING_HTTP_POST, BINDING_HTTP_REDIRECT]:
-            response_bindings = [BINDING_HTTP_POST, BINDING_HTTP_REDIRECT]
+            response_bindings = [BINDING_HTTP_REDIRECT]
         else:
             response_bindings = self.config.preferred_binding["single_logout_service"]
 
